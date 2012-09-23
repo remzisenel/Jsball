@@ -95,7 +95,7 @@ function calculateBall(deltaTime)
 	var boxIntersections = ray.intersectObjects(bricks);
 	if(boxIntersections.length > 0) 
 	{
-		if(boxIntersections[0].distance < distanceToGo)
+		while(boxIntersections[0].distance < distanceToGo)
 		{
 			if(boxIntersections[0].face.normal.y != 0) ball.speed.y *= -1;
 			if(boxIntersections[0].face.normal.x != 0) ball.speed.x *= -1;
@@ -104,13 +104,13 @@ function calculateBall(deltaTime)
 			brickcount--;
 			if(brickcount == 0)
 			{
-				
+				//ENDGAME
 			}
-			//var diff = boxIntersections[0].point.x - paddle1.sceneObject.position.x;
-			//var slope = diff / paddle1.width;
-			//ball.speed.x = slope*3;
-			//ball.speed.y *= -1;
+			vector = new THREE.Vector3( ball.speed.x, ball.speed.y, 0 );
+			ray = new THREE.Ray( ball.sceneObject.position, vector.normalize());
+			boxIntersections = ray.intersectObjects(bricks);
 		}
+		
 	}
 
 	//bounce all the way!
@@ -146,7 +146,7 @@ function initBall()
 {
 	ball.speed = {};
 	ball.speed.x = 0.0;
-	ball.speed.y = 0.8;
+	ball.speed.y = 0.6;
 }
 
 
